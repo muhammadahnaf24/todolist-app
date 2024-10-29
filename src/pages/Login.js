@@ -10,7 +10,7 @@ function Login() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError("");
+    setError(""); // Reset error saat input diubah
   };
 
   const handleSubmit = async (e) => {
@@ -21,7 +21,13 @@ function Login() {
       alert("Login successful!");
       navigate("/"); // Arahkan ke halaman beranda setelah login
     } catch (error) {
-      setError("Login failed. Check your credentials and try again.");
+      // Tangkap pesan error dari respons backend
+      const errorMessage =
+        error.response && error.response.data && error.response.data.error
+          ? error.response.data.error // Mengambil dari 'error'
+          : "Login failed. Check your credentials and try again.";
+
+      setError(errorMessage); // Set pesan error di state
     }
   };
 
@@ -58,7 +64,8 @@ function Login() {
           >
             Login
           </button>
-          {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
+          {error && <p className="mt-4 text-red-600 text-center">{error}</p>}{" "}
+          {/* Tampilkan pesan error */}
         </form>
         <p className="mt-6 text-center text-gray-600">
           Don't have an account?{" "}
