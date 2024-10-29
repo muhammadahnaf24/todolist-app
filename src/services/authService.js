@@ -1,7 +1,7 @@
 // src/services/authService.js
 import axios from "axios";
 
-const API_URL = "https://todolist-app-server.vercel.app/auth"; // Sesuaikan URL backend Anda
+const API_URL = "https://todolist-app-server.vercel.app/"; // Sesuaikan URL backend Anda
 
 // Register
 export const register = async (userData) => {
