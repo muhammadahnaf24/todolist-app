@@ -1,5 +1,6 @@
 import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { logout } from "../services/authService"; // Sesuaikan path jika diperlukan
 
 const Profile = () => {
   const user = {
@@ -9,6 +10,12 @@ const Profile = () => {
     address: "Indonesia",
     avatar:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFhzGPvlzP3hRyDnhtVEDcly8tqf6UTpOFeFYlDKlUciISY01q7kvUIO0Fan2Eeg-3Y4E&usqp=CAU",
+  };
+
+  const handleLogout = () => {
+    logout(); // Panggil fungsi logout dari authService
+    // Tambahkan logika untuk mengalihkan pengguna ke halaman login atau beranda setelah logout
+    window.location.href = "/login"; // Ganti dengan rute yang sesuai
   };
 
   return (
@@ -46,6 +53,12 @@ const Profile = () => {
           </p>
         </div>
       </div>
+      <button
+        onClick={handleLogout}
+        className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500"
+      >
+        Logout
+      </button>
     </div>
   );
 };
