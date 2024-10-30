@@ -2,15 +2,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import Button from "../components/Button";
+import Alert from "../components/Alert"; // Corrected import path
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // This is where the warning comes from
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("info");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError(""); // Reset error saat input diubah
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -18,23 +22,28 @@ function Login() {
     try {
       const response = await login(form);
       localStorage.setItem("token", response.token);
-      alert("Login successful!");
-      navigate("/"); // Arahkan ke halaman beranda setelah login
+      setAlertMessage("Login successful!");
+      setAlertVariant("success");
+      navigate("/");
     } catch (error) {
-      // Tangkap pesan error dari respons backend
       const errorMessage =
         error.response && error.response.data && error.response.data.error
-          ? error.response.data.error // Mengambil dari 'error'
+          ? error.response.data.error
           : "Login failed. Check your credentials and try again.";
 
-      setError(errorMessage); // Set pesan error di state
+      setError(errorMessage); // Set error message to state
+      setAlertMessage(errorMessage); // Use alert for error feedback
+      setAlertVariant("error");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+    <div className="flex items-center justify-center min-h-fit bg-gray-100 py-16">
+      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-md">
         <h2 className="mb-6 text-2xl font-semibold text-center">Login</h2>
+        {alertMessage && (
+          <Alert message={alertMessage} variant={alertVariant} />
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -58,14 +67,10 @@ function Login() {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
+          <Button type="submit" className="w-full py-2">
             Login
-          </button>
-          {error && <p className="mt-4 text-red-600 text-center">{error}</p>}{" "}
-          {/* Tampilkan pesan error */}
+          </Button>
+          {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
         </form>
         <p className="mt-6 text-center text-gray-600">
           Don't have an account?{" "}

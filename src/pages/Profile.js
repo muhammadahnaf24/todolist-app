@@ -1,6 +1,7 @@
 import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-import { logout } from "../services/authService"; // Sesuaikan path jika diperlukan
+import { logout } from "../services/authService";
+import Button from "../components/Button";
 
 const Profile = () => {
   const user = {
@@ -53,12 +54,10 @@ const Profile = () => {
           </p>
         </div>
       </div>
-      <button
-        onClick={handleLogout}
-        className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500"
-      >
+
+      <Button onClick={handleLogout} variant="danger" className="mt-4">
         Logout
-      </button>
+      </Button>
     </div>
   );
 };

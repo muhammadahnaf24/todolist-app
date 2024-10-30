@@ -38,7 +38,7 @@ const Home = () => {
           <Button
             variant="primary"
             onClick={handleGetStarted}
-            className="px-6 py-3 rounded-full bg-yellow-600 text-white text-lg font-semibold hover:bg-yellow-700 transition duration-300"
+            className="px-6 py-3 rounded-full bg-yellow-600 text-white text-lg font-semibold hover:bg-yellow-800 transition duration-300"
           >
             Create Your First Task
           </Button>
